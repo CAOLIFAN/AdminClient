@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Icon, Input, Button } from 'antd';
-import logo from './images/logo.png'
+import { Form, Icon, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import logo from '../../assets/images/logo.png'
 import './login.less'
-import { IconMap } from 'antd/lib/result';
-
-const Item = Form.Item
 
 export default class Login extends Component {
 
@@ -25,22 +23,23 @@ export default class Login extends Component {
                     <h1>用户登陆</h1>
 
                     <Form onSubmit={this.handleSubmit} className="login-form">
-                        <Item>
-                            <input 
-                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="Username"
-                            />
-                        </Item>
-                        <Item>
-                            <input 
-                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                type="password"
-                                placeholder="Password"
-                            />
-                        </Item>
-                        <Item>
+                        
+                        <Form.Item name="username">
+                        <input 
+                            prefix={<UserOutlined/>}
+                            placeholder="用户名"/>
+                        </Form.Item>
+                        
+                        <Form.Item name="password">
+                        <input 
+                            prefix={<LockOutlined/>}
+                            type="password"
+                            placeholder="密码"/>
+                        </Form.Item>
+
+                        <Form.Item>
                             <Button type="primary" htmlType="submit" className="login-form-button">登 陆</Button>
-                        </Item>
+                        </Form.Item>
                     </Form>
                 </div>
             </div>
