@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import { Layout } from 'antd'
 
-import LeftNav from '../../components/left-nav';
-import Header from '../../components/header';
+import LeftNav from '../../components/left-nav'
+import Header from '../../components/header'
 
 import Home from '../home/home'
 import Category from '../category/category'
@@ -25,7 +25,7 @@ export default class Admin extends Component {
                 </Sider>
                 <Layout>
                     <Header />
-                    <Content style={{ background: 'white'}}>
+                    <Content style={{ background: 'white', margin: '20px'}}>
                         <Switch>
                         <Route path='/home' component={Home}/>
                             <Route path='/category' component={Category}/>
