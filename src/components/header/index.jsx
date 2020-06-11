@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Modal, Button, Space } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+
+import LinkButton from '../../components/link-button'
 import menuList from '../../config/menuConfig'
 import { formateDate } from '../../utils/dateUtils'
 import './index.less'
@@ -62,13 +64,13 @@ class Header extends Component {
             <div className="header"> 
                 <div className="header-top">
                     欢迎，admin &nbsp;
-                    <a href="javascript:" onClick={this.logout}>退出</a>
+                    <LinkButton onClick={this.logout}>退出</LinkButton>
                 </div>
                 <div className="header-bottom">
                     <div className="header-bottom-left">{title}</div>
                     <div className="header-bottom-right">
                         <span>{currentTime}</span>
-                        <span>晴</span>
+                        <span></span>
                     </div>
                 </div>
             </div>
