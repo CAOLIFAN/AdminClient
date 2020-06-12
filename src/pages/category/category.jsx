@@ -10,7 +10,6 @@ const columns = [
   {
     title: '分类名称',
     dataIndex: 'name',
-    
   },
   {
     title: '操作',

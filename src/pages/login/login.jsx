@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
+import { reqLogin } from '../../api'
 import logo from '../../assets/images/logo.png'
 import './login.less'
 
