@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
 import { Menu } from 'antd'
-import {
-    HomeOutlined,
-    AppstoreOutlined,
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    PieChartOutlined,
-    DesktopOutlined,
-    ContainerOutlined,
-    MailOutlined,
-} from '@ant-design/icons'
+// import {
+//     HomeOutlined,
+//     AppstoreOutlined,
+//     MenuUnfoldOutlined,
+//     MenuFoldOutlined,
+//     PieChartOutlined,
+//     DesktopOutlined,
+//     ContainerOutlined,
+//     MailOutlined,
+// } from '@ant-design/icons'
 
 import menuList from '../../config/menuConfig'
 import logo from '../../assets/images/logo.png'

@@ -10,7 +10,32 @@ export const reqAddCategory = (categoryName) => ajax.post(BASE + '/manage/catego
     categoryName
 })
 
-export const reqUpdateCategory = ({categoryId, categoryName}) => ajax.post(BASE + '/manage/category/update', {
-    categoryId,
-    categoryName
+export const reqUpdateCategory = ({categoryId, categoryName}) => ajax.post(BASE + '/manage/category/update',
+    {
+        categoryId,
+        categoryName
+    }
+)
+
+export const reqProducts = (pageNum, pageSize) => ajax(BASE + '/manage/product/list', 
+    {params: {
+        pageNum, 
+        pageSize
+    }
 })
+
+export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) => ajax(BASE + '/manage/product/search',
+    {params: {
+        pageNum,
+        pageSize,
+        [searchType]: searchName
+    }
+})
+
+export const reqUpdateStatus = (productId, status) => ajax(BASE + '/manage/product/updateStatus', {
+    method: 'POST',
+    data: {
+        productId,
+        status
+    }
+}) 

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Modal, Button, Space } from 'antd'
+import { Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
 import LinkButton from '../../components/link-button'
 import menuList from '../../config/menuConfig'
 import { formateDate } from '../../utils/dateUtils'
@@ -18,12 +20,15 @@ class Header extends Component {
         Modal.confirm({
             title: '确认退出吗?',
             icon: <ExclamationCircleOutlined />,
-            onOk() {
-                console.log('OK');
+            onOk: () => {
+                console.log('OK')
+                storageUtils.removeUser()
+                memoryUtils.user = {}
+                this.props.history.replace('/login')
             },
             onCancel() {
-                console.log('Cancel');
-            },
+                console.log('Cancel')
+            }
           });
     }
 
@@ -57,13 +62,14 @@ class Header extends Component {
 
     render() {
 
+        const user = memoryUtils.user
         const { currentTime } = this.state
         const title = this.getTitle()
 
         return (
             <div className="header"> 
                 <div className="header-top">
-                    欢迎，admin &nbsp;
+                    欢迎，{user.username} &nbsp;&nbsp;
                     <LinkButton onClick={this.logout}>退出</LinkButton>
                 </div>
                 <div className="header-bottom">

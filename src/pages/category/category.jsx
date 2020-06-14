@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Button, Table, Modal, message } from 'antd';
-import { PlusOutlined, LockOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { reqCategorys, reqAddCategory, reqUpdateCategory } from '../../api'
+import { reqCategorys, reqAddCategory } from '../../api'
 import LinkButton from '../../components/link-button/'
 import AddUpdateForm from './add-update-form'
 
@@ -84,7 +84,10 @@ export default class Category extends Component {
     const category = this.category || {}
 
     const extra = (
-      <Button type="primary" onClick={() => { this.setState({showStatus: 1}) }}>
+      <Button type="primary" onClick={() => {
+        this.category = {}
+        this.setState({showStatus: 1}) 
+      }}>
         <PlusOutlined />
         添加
       </Button>
