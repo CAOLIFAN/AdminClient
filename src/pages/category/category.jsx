@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { Card, Button, Table, Modal, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { reqCategorys, reqAddCategory } from '../../api'
+import { reqCategorys, reqAddCategory, reqUpdateCategory } from '../../api'
 import LinkButton from '../../components/link-button/'
 import AddUpdateForm from './add-update-form'
 
 export default class Category extends Component {
+  
+  formRef = React.createRef();
   
   state = {
     categorys: [],
@@ -45,30 +47,30 @@ export default class Category extends Component {
     }
   }
 
-  componentWillMount () {
-    this.initColums()
-  }
 
-  componentDidMount() {
-    this.getCategorys()
-  }
+  handleOk = async() => {
 
-  handleOk = () => {
+    const categoryName = this.formRef.current.formRef.current.getFieldsValue().categoryName
+    const { showStatus } = this.state
+    let result
+    if(showStatus===1) {
+      result = await reqAddCategory(categoryName)
 
-    this.form.validateFields(async(err, values) => {
-      if(!err) {
-        const { categoryName } = values
-        const result = await reqAddCategory(categoryName)
-        this.setState({ showStatus: 0 })
-      
-        if (result.status===0){
-          this.getCategorys()
-          message.success('添加分类成功')
-        } else {
-          message.error('添加分类失败')
-        }
-      }  
-    })
+    } else {
+      const categoryId = this.category._id
+      result = await reqUpdateCategory({ categoryId, categoryName })
+    }
+
+    const action = showStatus===1 ? '添加' : '修改'
+
+    this.setState({ showStatus: 0 })
+
+    if (result.status===0){
+        this.getCategorys()
+        message.success(action + '分类成功')
+     } else {
+        message.error(action + '分类失败')
+     } 
   }
 
   handleCancel = () => {
@@ -77,11 +79,19 @@ export default class Category extends Component {
     })
   }
 
+  componentWillMount () {
+    this.initColums()
+  }
+
+  componentDidMount() {
+    this.getCategorys()
+  }
+
   render() {
 
     const { categorys, loading, showStatus } = this.state
 
-    const category = this.category || {}
+    const category  = this.category || {}
 
     const extra = (
       <Button type="primary" onClick={() => {
@@ -110,7 +120,7 @@ export default class Category extends Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}
           >
-            <AddUpdateForm setForm={form => this.form = form} categoryName={category.name}/>
+            <AddUpdateForm ref={this.formRef} categoryName={category.name}/>
           </Modal>
       </Card>
     )

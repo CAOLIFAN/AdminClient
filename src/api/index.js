@@ -39,3 +39,11 @@ export const reqUpdateStatus = (productId, status) => ajax(BASE + '/manage/produ
         status
     }
 }) 
+
+export const reqRoles = () => ajax(BASE + '/manage/role/list')
+
+export const reqAddRole = (roleName) => ajax.post(BASE + '/manage/role/add', {
+    roleName
+})
+
+export const reqUpdateRole = (role) => ajax.post(BASE + '/manage/role/update', role)
