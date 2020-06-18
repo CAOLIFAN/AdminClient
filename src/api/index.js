@@ -17,8 +17,14 @@ export const reqUpdateCategory = ({categoryId, categoryName}) => ajax.post(BASE 
     }
 )
 
-export const reqProducts = (pageNum, pageSize) => ajax(BASE + '/manage/product/list', 
-    {params: {
+export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', {
+    params: {
+        categoryId
+    }
+})
+
+export const reqProducts = (pageNum, pageSize) => ajax(BASE + '/manage/product/list', {
+    params: {
         pageNum, 
         pageSize
     }

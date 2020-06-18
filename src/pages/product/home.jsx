@@ -9,6 +9,7 @@ import {
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 
+import memoryUtils from '../../utils/memoryUtils'
 import { reqProducts, reqSearchProducts, reqUpdateStatus } from '../../api'
 import LinkButton from '../../components/link-button'
 import { PAGE_SIZE } from '../../utils/Constants'
@@ -49,6 +50,7 @@ export default class ProductHome extends Component {
       },
       {
         title: '价格',
+        width: 100,
         dataIndex: 'price',
         render: (price) => '¥' + price
       },
@@ -72,9 +74,17 @@ export default class ProductHome extends Component {
       },
       {
         title: '操作',
+        width: 100,
         render: (product) => (
           <span>
-            <LinkButton onClick={() => this.props.history.push('/product/detail')}>详情</LinkButton>
+            <LinkButton 
+              onClick={() => {
+                memoryUtils.product = product
+                this.props.history.push('/product/detail')
+              }}
+            >
+              详情
+             </LinkButton>
             <LinkButton>修改</LinkButton>
           </span>
         )
