@@ -10,10 +10,10 @@ import {
 } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-
 import LinkButton from '../../components/link-button'
-
+import PicturesWall from './picture-wall'
 import { reqCategorys } from '../../api'
+import memoryUtils from '../../utils/memoryUtils';
 
 const Item = Form.Item
 const Option = Select.Option
@@ -44,6 +44,11 @@ class ProductAddUpdate extends Component {
     }
   }
 
+  componentWillMount () {
+    this.product = memoryUtils.product
+    this.isUpdate = !!this.product._id
+  }
+
   componentDidMount () {
     this.getCategorys()
   }
@@ -51,13 +56,14 @@ class ProductAddUpdate extends Component {
   render() {
 
     const { categorys } = this.state
+    const { isUpdate, product } = this
 
     const title = (
       <span>
         <LinkButton onClick={() => this.props.history.goBack()}>
             <ArrowLeftOutlined/>
         </LinkButton>
-        <span>添加商品</span>
+        <span>{isUpdate ? '修改商品' : '添加商品'}</span>
       </span>
     )
 
@@ -72,6 +78,7 @@ class ProductAddUpdate extends Component {
                 <Item 
                     label="商品名称"
                     name={'name'}
+                    initialValue={product.name}
                     rules={[{ required: true, message: '请输入商品名称'}]}
                 >
                     <Input placeholder="商品名称"/>
@@ -79,6 +86,7 @@ class ProductAddUpdate extends Component {
                 <Item 
                     label="商品描述"
                     name={'desc'} 
+                    initialValue={product.desc}
                     rules={[{ required: true, message: '请输入商品描述'}]}
                 >
                     <Input placeholder="商品描述"/>
@@ -86,6 +94,7 @@ class ProductAddUpdate extends Component {
                 <Item 
                     label="商品价格"
                     name={'price'}
+                    initialValue={product.price}
                     rules={[
                         { required: true, message: '请输入商品价格'},
                         { validator: this.validatePrice }
@@ -96,6 +105,7 @@ class ProductAddUpdate extends Component {
                 <Item 
                     label="商品分类"
                     name={'categoryId'}
+                    initialValue={product.categoryId || ''}
                     rules={[{ required: true, message: '请输入商品分类'}]}
                 >
                 <Select>
@@ -106,7 +116,7 @@ class ProductAddUpdate extends Component {
                 </Select>
                 </Item>
                 <Item label="商品图片">
-                    <div>商品图片组件</div>
+                  <PicturesWall/>
                 </Item>
                 <Item label="商品详情">
                     <div>商品详情组件</div>

@@ -85,7 +85,14 @@ export default class ProductHome extends Component {
             >
               详情
              </LinkButton>
-            <LinkButton>修改</LinkButton>
+            <LinkButton
+              onClick={() => {
+                memoryUtils.product = product
+                this.props.history.push('/product/addupdate')
+              }}
+            >
+              修改
+            </LinkButton>
           </span>
         )
       }
@@ -144,7 +151,10 @@ export default class ProductHome extends Component {
     )
 
     const extra = (
-      <Button type="primary" onClick={() => this.props.history.push('/product/addupdate')}>
+      <Button type="primary" onClick={() => {
+        memoryUtils.product = {}
+        this.props.history.push('/product/addupdate')
+      }}>
         <PlusOutlined />          
         添加商品
       </Button>
