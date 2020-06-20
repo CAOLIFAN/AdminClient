@@ -96,7 +96,7 @@ export default class PicturesWall extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
         >
-          {fileList.length >= 3 ? null : uploadButton}
+          {fileList.length >= 2 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}
