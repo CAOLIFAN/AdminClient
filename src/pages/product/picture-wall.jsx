@@ -1,6 +1,10 @@
 import React from 'react'
-import { Upload, Modal } from 'antd';
+import propTypes from 'prop-types'
+import { Upload, Modal, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+
+import { reqDeleteImg } from '../../api'
+import { BASE_IMG } from '../../utils/Constants'
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -12,19 +16,32 @@ function getBase64(file) {
 }
 
 export default class PicturesWall extends React.Component {
+
+  static propTypes = {
+    imgs: propTypes.array
+  }
+
   state = {
     previewVisible: false,
     previewImage: '',
     previewTitle: '',
-    fileList: [
-      {
-        uid: '-1',
-        name: 'image.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      },
-    ],
+    fileList: [],
   };
+
+  componentWillMount () {
+    const imgs = this.props.imgs
+    if (imgs && imgs.length>0) {
+      const fileList = imgs.map((img, index) => ({
+        uid: -index,
+        name: img,
+        status: 'done',
+        url: BASE_IMG + img
+      }))
+      this.setState({ fileList })
+    }
+  }
+
+  getImgs = () => this.state.fileList.map(file => file.name)
 
   handleCancel = () => this.setState({ previewVisible: false });
 
@@ -40,7 +57,26 @@ export default class PicturesWall extends React.Component {
     });
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = async({ file, fileList }) => {
+    
+    if (file.status==='done') {
+      file = fileList[fileList.length - 1]
+      const { name, url } = file.response.data
+      file.name = name
+      file.url = url
+    } else if (file.status==='removed') {
+      const result = await reqDeleteImg(file.name)
+      if (result.status===0) {
+        message.success('删除图片成功')
+      }
+      else {
+        message.error('删除图片失败')
+      }
+    }
+
+    this.setState({ fileList })
+  }
+
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
@@ -60,7 +96,7 @@ export default class PicturesWall extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
         >
-          {fileList.length >= 8 ? null : uploadButton}
+          {fileList.length >= 3 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}

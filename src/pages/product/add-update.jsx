@@ -6,7 +6,6 @@ import {
   Input,
   Select,
   Button,
-  message
 } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
@@ -22,10 +21,14 @@ class ProductAddUpdate extends Component {
 
   state = {
     categorys: []
-    
   }
 
-  getCategorys = async () => {
+  constructor(props) {
+    super(props)
+    this.pwRef = React.createRef()
+  }
+
+  getCategorys = async() => {
     const result = await reqCategorys()
     if (result.status === 0) {
       const categorys = result.data
@@ -55,6 +58,16 @@ class ProductAddUpdate extends Component {
 
   render() {
 
+    const onFinish = async(values) => {
+      const name = values.name
+      const desc = values.desc
+      const price = values.price
+      const categoryId = values.categoryId
+      console.log('发送请求', name, desc, price, categoryId)
+      const imgs = this.pwRef.current.getImgs()
+      console.log('imgs', imgs)
+    }
+
     const { categorys } = this.state
     const { isUpdate, product } = this
 
@@ -74,7 +87,7 @@ class ProductAddUpdate extends Component {
 
     return (
         <Card title={title}>
-            <Form {...formLayout}>
+            <Form {...formLayout} onFinish={onFinish}>
                 <Item 
                     label="商品名称"
                     name={'name'}
@@ -116,7 +129,7 @@ class ProductAddUpdate extends Component {
                 </Select>
                 </Item>
                 <Item label="商品图片">
-                  <PicturesWall/>
+                <PicturesWall ref={this.pwRef} imgs={product.imgs}/>
                 </Item>
                 <Item label="商品详情">
                     <div>商品详情组件</div>
