@@ -8,7 +8,7 @@ import AddUpdateForm from './add-update-form'
 
 export default class Category extends Component {
   
-  formRef = React.createRef();
+  formRef = React.createRef()
   
   state = {
     categorys: [],
@@ -98,7 +98,7 @@ export default class Category extends Component {
         this.category = {}
         this.setState({showStatus: 1}) 
       }}>
-        <PlusOutlined />
+        <PlusOutlined/>
         添加
       </Button>
     )

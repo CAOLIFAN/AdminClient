@@ -48,6 +48,11 @@ export const reqUpdateStatus = (productId, status) => ajax(BASE + '/manage/produ
 
 export const reqDeleteImg = (name) => ajax.post(BASE + '/manage/img/delete', {name})
 
+export const reqAddUpdateProduct = (product) => ajax.post(
+    BASE + '/manage/product/' + (product._id ? 'update' : 'add'),
+    product
+)
+
 export const reqRoles = () => ajax(BASE + '/manage/role/list')
 
 export const reqAddRole = (roleName) => ajax.post(BASE + '/manage/role/add', {
@@ -55,3 +60,14 @@ export const reqAddRole = (roleName) => ajax.post(BASE + '/manage/role/add', {
 })
 
 export const reqUpdateRole = (role) => ajax.post(BASE + '/manage/role/update', role)
+
+export const reqUsers = () => ajax(BASE + '/manage/user/list')
+
+export const reqDeleteUser = (userId) => ajax.post(BASE + '/manage/user/delete', {
+    userId
+})
+
+export const reqAddUpdateUser = (user) => ajax.post(
+    BASE + '/manage/user/' + (user._id ? 'update' : 'add'),
+    user
+)

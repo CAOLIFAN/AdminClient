@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
 import {
   Card,
   Form,
   Input,
   Select,
   Button,
+  message,
 } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import LinkButton from '../../components/link-button'
 import PicturesWall from './picture-wall'
-import { reqCategorys } from '../../api'
-import memoryUtils from '../../utils/memoryUtils';
+import RichTextEditor from './rich-text-editor'
+import { reqCategorys, reqAddUpdateProduct } from '../../api'
+import memoryUtils from '../../utils/memoryUtils'
 
 const Item = Form.Item
 const Option = Select.Option
@@ -26,6 +27,7 @@ class ProductAddUpdate extends Component {
   constructor(props) {
     super(props)
     this.pwRef = React.createRef()
+    this.editorRef = React.createRef()
   }
 
   getCategorys = async() => {
@@ -63,9 +65,21 @@ class ProductAddUpdate extends Component {
       const desc = values.desc
       const price = values.price
       const categoryId = values.categoryId
-      console.log('发送请求', name, desc, price, categoryId)
       const imgs = this.pwRef.current.getImgs()
-      console.log('imgs', imgs)
+      const detail = this.editorRef.current.getDetail()
+      
+      const product = {name, desc, price, categoryId, imgs, detail}
+      if (this.isUpdate) {
+        product._id = this.product._id
+      }
+
+      const result = await reqAddUpdateProduct(product)
+      if (result.status===0) {
+        message.success(`${this.isUpdate ? '修改' : '添加'}商品成功`)
+        this.props.history.replace('/product')
+      } else {
+        message.error(result.msg)
+      }
     }
 
     const { categorys } = this.state
@@ -131,8 +145,8 @@ class ProductAddUpdate extends Component {
                 <Item label="商品图片">
                 <PicturesWall ref={this.pwRef} imgs={product.imgs}/>
                 </Item>
-                <Item label="商品详情">
-                    <div>商品详情组件</div>
+                <Item label="商品详情" wrapperCol={{ span: 20 }}>
+                    <RichTextEditor ref={this.editorRef} detail={product.detail}/>
                 </Item>
                 <Item>
                     <Button type='primary' htmlType="submit">提交</Button>

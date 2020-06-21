@@ -1,48 +1,46 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import {
   Form,
   Input,
 } from 'antd'
 
-/*
-用来添加角色的form组件
- */
-class AddForm extends PureComponent {
+const Item = Form.Item
+
+export default class AddForm extends PureComponent {
+
+  formRef = React.createRef()
 
   static propTypes = {
-    setForm: PropTypes.func.isRequired
+    setForm: propTypes.func.isRequired,
+    roleName: propTypes.string
   }
 
-  componentWillMount() {
-    this.props.setForm(this.props.form)
-  }
+  componentDidUpdate() {
+    this.formRef.current.setFieldsValue({
+      roleName: this.props.roleName
+    })
+}
 
   render() {
-    const { getFieldDecorator } = this.props.form
-    
+
+    const { roleName } = this.props
     const formItemLayout = {
       labelCol: { span: 5 },
       wrapperCol: { span: 16 }
     }
 
     return (
-      <Form>
-        <Form.Item label="角色名称" {...formItemLayout}>
-          {
-            getFieldDecorator('roleName', {
-              initialValue: '',
-              rules: [
-                {required: true, message: '必须输入角色名称'}
-              ]
-            })(
-              <Input type="text" placeholder="请输入角色名称" />
-            )
-          }
-        </Form.Item>
+      <Form ref={this.formRef}>
+        <Item 
+          label="角色名称" {...formItemLayout}
+          name='roleName'
+          initialValue=''
+          rules={[{required: true, message: '必须输入角色名称'}]}
+        >
+          <Input type="text" placeholder="请输入角色名称" />
+        </Item>
       </Form>
     )
   }
 }
-
-export default AddForm

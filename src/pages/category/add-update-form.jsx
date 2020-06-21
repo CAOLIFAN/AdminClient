@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 
 const Item = Form.Item
 
-class AddUpdateForm extends Component {
+export default class AddUpdateForm extends Component {
 
     formRef = React.createRef()
 
@@ -15,7 +15,7 @@ class AddUpdateForm extends Component {
 
     componentDidUpdate() {
         this.formRef.current.setFieldsValue({
-            categoryName: this.props.categoryName,
+            categoryName: this.props.categoryName
         })
     }
 
@@ -35,5 +35,3 @@ class AddUpdateForm extends Component {
         )
     }
 }
-
-export default AddUpdateForm
