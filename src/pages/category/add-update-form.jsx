@@ -28,8 +28,9 @@ export default class AddUpdateForm extends Component {
                 <Item
                     name="categoryName"
                     initialValue={categoryName}
-                    rules={[{ required: true, message: '分类名称必须输入' }]}>
-                    <Input type="text" placeholder="请输入分类名称"></Input>
+                    rules={[{ required: true, message: '分类名称必须输入' }]}
+                >
+                    <Input type="text" placeholder="请输入分类名称"/>
                 </Item>
             </Form>
         )

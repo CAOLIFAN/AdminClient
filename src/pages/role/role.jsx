@@ -17,8 +17,6 @@ import { reqAddRole, reqUpdateRole, reqRoles } from '../../api'
 
 export default class Role extends PureComponent {
 
-  formRef = React.createRef()
-
   state = {
     roles: [],
     isShowAdd: false,
@@ -27,6 +25,7 @@ export default class Role extends PureComponent {
 
   constructor (props) {
     super(props)
+    this.addRef = React.createRef()
     this.authRef = React.createRef()
   }
 
@@ -75,12 +74,11 @@ export default class Role extends PureComponent {
   }
 
   addRole = async() => {
-    
     this.setState({
       isShowAdd: false
     })
 
-    const roleName = this.formRef.current.formRef.current.getFieldsValue().roleName
+    const roleName = this.addRef.current.addRef.current.getFieldsValue().roleName
     const result = await reqAddRole(roleName)
     if (result.status===0) {
       message.success('添加角色成功') 
@@ -117,8 +115,9 @@ export default class Role extends PureComponent {
   }
 
   render() {
-    console.log('role render()')
+
     const { roles, isShowAdd, isShowAuth } = this.state
+
     const role = this.role || {}
 
     const title = (
@@ -143,10 +142,9 @@ export default class Role extends PureComponent {
           onOk={this.addRole}
           onCancel={() => {
             this.setState({ isShowAdd: false })
-            // this.form.resetFields()
           }}
         >
-          <AddForm ref={this.formRef}/>
+          <AddForm ref={this.addRef}/>
         </Modal>
 
         <Modal
@@ -157,7 +155,7 @@ export default class Role extends PureComponent {
             this.setState({ isShowAuth: false })
           }}
         >
-          <AuthForm ref={this.authRef} role={role} />
+          <AuthForm ref={this.authRef} role={role}/>
         </Modal>
       </Card>
     )

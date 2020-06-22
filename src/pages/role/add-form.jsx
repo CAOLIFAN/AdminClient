@@ -9,7 +9,7 @@ const Item = Form.Item
 
 export default class AddForm extends PureComponent {
 
-  formRef = React.createRef()
+  addRef = React.createRef()
 
   static propTypes = {
     setForm: propTypes.func.isRequired,
@@ -17,7 +17,7 @@ export default class AddForm extends PureComponent {
   }
 
   componentDidUpdate() {
-    this.formRef.current.setFieldsValue({
+    this.addRef.current.setFieldsValue({
       roleName: this.props.roleName
     })
 }
@@ -25,20 +25,22 @@ export default class AddForm extends PureComponent {
   render() {
 
     const { roleName } = this.props
+    
     const formItemLayout = {
       labelCol: { span: 5 },
       wrapperCol: { span: 16 }
     }
 
     return (
-      <Form ref={this.formRef}>
-        <Item 
-          label="角色名称" {...formItemLayout}
+      <Form ref={this.addRef}>
+        <Item
+          {...formItemLayout}
+          label="角色名称" 
           name='roleName'
-          initialValue=''
-          rules={[{required: true, message: '必须输入角色名称'}]}
+          initialValue={roleName}
+          rules={[{ required: true, message: '必须输入角色名称' }]}
         >
-          <Input type="text" placeholder="请输入角色名称" />
+          <Input type="text" placeholder="请输入角色名称"/>
         </Item>
       </Form>
     )

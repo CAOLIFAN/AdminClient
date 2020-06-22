@@ -47,7 +47,6 @@ export default class Category extends Component {
     }
   }
 
-
   handleOk = async() => {
 
     const categoryName = this.formRef.current.formRef.current.getFieldsValue().categoryName

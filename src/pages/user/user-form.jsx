@@ -9,7 +9,9 @@ import {
 const Item = Form.Item
 const Option = Select.Option
 
-class UserForm extends PureComponent {
+export default class UserForm extends PureComponent {
+
+  userFormRef = React.createRef()
 
   static propTypes = {
     setForm: PropTypes.func.isRequired,
@@ -17,9 +19,12 @@ class UserForm extends PureComponent {
     user: PropTypes.object
   }
 
-  componentWillMount () {
-    this.props.setForm(this.props.form)
-  }
+  componentDidUpdate() {
+    this.userFormRef.current.setFieldsValue({
+      roles: this.props.roles,
+      user: this.props.user
+    })
+}
 
   render() {
 
@@ -30,7 +35,7 @@ class UserForm extends PureComponent {
     }
 
     return (
-      <Form {...formItemLayout}>
+      <Form {...formItemLayout} ref={this.userFormRef}>
         <Item 
           label='用户名'
           name='username'
@@ -84,5 +89,3 @@ class UserForm extends PureComponent {
     )
   }
 }
-
-export default UserForm

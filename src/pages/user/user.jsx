@@ -14,6 +14,8 @@ import UserForm from './user-form'
 
 export default class User extends Component {
 
+  userFormRef = React.createRef()
+
   state = {
     users: [],
     roles: [],
@@ -83,24 +85,28 @@ export default class User extends Component {
     })
   }
 
-  addOrUpdateUser = async (values) => {
+  addUpdateUser = async() => {
 
     this.setState({isShow: false})
 
-    if (this.user) {
-      values._id = this.user._id
-    }
+    const roles = this.userForm.current.userForm.current.getFieldsValue().roles
+    const user = this.userForm.current.userForm.current.getFieldsValue().user
 
-    const result = await reqAddUpdateUser(values)
-    if (result.status===0) {
-      message.success('添加/更新用户成功')
-      this.getUsers()
-    } else {
-      message.error(result.msg)
-    } 
+    // if (this.user) {
+    //   values._id = this.user._id
+    // }
+    
+    // const result = await reqAddUpdateUser(values)
+
+  //   if (result.status===0) {
+  //     message.success('添加/更新用户成功')
+  //     this.getUsers()
+  //   } else {
+  //     message.error(result.msg)
+  //   } 
   }
 
-  getUsers = async () => {
+  getUsers = async() => {
     const result = await reqUsers()
     if (result.status===0) {
       const {users, roles} = result.data
@@ -146,14 +152,14 @@ export default class User extends Component {
         <Modal
           title={user._id ? '修改用户' : '添加用户'}
           visible={isShow}
-          onOk={this.addOrUpdateUser}
+          onOk={this.addUpdateUser}
           onCancel={() => {
             this.form.resetFields()
             this.setState({isShow: false})
           }}
         >
           <UserForm
-            setForm={form => this.form = form}
+            ref={this.userFormRef}
             roles={roles}
             user={user}
           />
