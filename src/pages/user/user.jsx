@@ -92,10 +92,10 @@ export default class User extends Component {
 
     this.setState({isShow: false})
 
-    const { user } = this
-    user.username = this.userFormRef.current.userFormRef.current.getFieldsValue().username
+    // const { user } = this
+    // user.username = this.userFormRef.current.userFormRef.current.getFieldsValue().username
 
-    console.log(user.username)
+    // console.log(user.username)
 
     // const result = await reqAddUpdateUser(user)
 
