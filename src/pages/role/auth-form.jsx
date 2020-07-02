@@ -56,7 +56,6 @@ export default class AuthForm extends PureComponent {
   }
 
   render() {
-    console.log('auth-form render()')
     const { role } = this.props
     const { checkedKeys } = this.state
     

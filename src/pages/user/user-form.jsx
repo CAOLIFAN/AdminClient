@@ -28,7 +28,8 @@ export default class UserForm extends PureComponent {
 
   render() {
 
-    const {roles, user} = this.props    
+    const { roles, user } = this.props
+       
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 15 }
@@ -36,7 +37,7 @@ export default class UserForm extends PureComponent {
 
     return (
       <Form {...formItemLayout} ref={this.userFormRef}>
-        <Item 
+        <Item
           label='用户名'
           name='username'
           initialValue={user.username}

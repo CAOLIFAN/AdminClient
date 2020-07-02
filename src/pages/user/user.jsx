@@ -14,12 +14,15 @@ import UserForm from './user-form'
 
 export default class User extends Component {
 
-  userFormRef = React.createRef()
-
   state = {
     users: [],
     roles: [],
     isShow: false
+  }
+
+  constructor (props) {
+    super(props)
+    this.userFormRef = React.createRef()
   }
 
   initColumns = () => {
@@ -89,21 +92,19 @@ export default class User extends Component {
 
     this.setState({isShow: false})
 
-    const roles = this.userForm.current.userForm.current.getFieldsValue().roles
-    const user = this.userForm.current.userForm.current.getFieldsValue().user
+    const { user } = this
+    user.username = this.userFormRef.current.userFormRef.current.getFieldsValue().username
 
-    // if (this.user) {
-    //   values._id = this.user._id
-    // }
-    
-    // const result = await reqAddUpdateUser(values)
+    console.log(user.username)
 
-  //   if (result.status===0) {
-  //     message.success('添加/更新用户成功')
-  //     this.getUsers()
-  //   } else {
-  //     message.error(result.msg)
-  //   } 
+    // const result = await reqAddUpdateUser(user)
+
+    // if (result.status===0) {
+    //   message.success('添加/更新用户成功')
+    //   this.getUsers()
+    // } else {
+    //   message.error(result.msg)
+    // } 
   }
 
   getUsers = async() => {
@@ -134,7 +135,8 @@ export default class User extends Component {
 
   render() {
 
-    const {users, roles, isShow} = this.state
+    const { users, roles, isShow } = this.state
+
     const user = this.user || {}
 
     const title = <Button type='primary' onClick={this.showAdd}>创建用户</Button>
@@ -154,15 +156,10 @@ export default class User extends Component {
           visible={isShow}
           onOk={this.addUpdateUser}
           onCancel={() => {
-            this.form.resetFields()
             this.setState({isShow: false})
           }}
         >
-          <UserForm
-            ref={this.userFormRef}
-            roles={roles}
-            user={user}
-          />
+          <UserForm ref={this.userFormRef} roles={roles} user={user} />
         </Modal>
       </Card>
     )
